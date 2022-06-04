@@ -516,7 +516,7 @@ describe Board do
         allow(checker50).to receive(:y).and_return(0)
       end
       it 'updates the board by adding a checker in the last row of the column' do
-        expect { empty_board.place_checker(0, :red) }.to change { empty_board.instance_variable_get(:@values)[5][0] }.from(nil).to be(checker50)
+        expect { empty_board.place_checker(0, :red) }.to change { empty_board.instance_variable_get(:@values)[5][0] }.from(nil).to(checker50)
       end
     end
   end
