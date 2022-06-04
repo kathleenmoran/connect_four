@@ -497,11 +497,27 @@ describe Board do
       end
     end
   end
-end
 
-[[nil, nil, nil, nil, nil, nil, nil], 
-[nil, nil, nil, nil, nil, nil, nil],
-[nil, nil, nil, nil, nil, nil, nil],
-[nil, nil, nil, nil, nil, nil, nil],
-[nil, nil, nil, nil, nil, nil, 46],
-[nil, nil, nil, nil, nil, 55, nil]]
+  describe '#place_checker' do
+    context 'when there are no checkers in the column' do
+      let(:values) {
+        [[nil, nil, nil, nil, nil, nil, nil], 
+        [nil, nil, nil, nil, nil, nil, nil],
+        [nil, nil, nil, nil, nil, nil, nil],
+        [nil, nil, nil, nil, nil, nil, nil],
+        [nil, nil, nil, nil, nil, nil, nil],
+        [nil, nil, nil, nil, nil, nil, nil]]
+      }
+      subject(:empty_board) { described_class.new(values) }
+      let(:checker50) { instance_double(Checker, color: :red, x: 5, y: 0) }
+      before do
+        allow(checker50).to receive(:color).and_return(:red)
+        allow(checker50).to receive(:x).and_return(5)
+        allow(checker50).to receive(:y).and_return(0)
+      end
+      it 'updates the board by adding a checker in the last row of the column' do
+        expect { empty_board.place_checker(0, :red) }.to change { empty_board.instance_variable_get(:@values)[5][0] }.from(nil).to be(checker50)
+      end
+    end
+  end
+end

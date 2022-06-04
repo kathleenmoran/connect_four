@@ -1,9 +1,18 @@
+# frozen_string_literal: true
+
+require_relative 'constants'
+
+# the board of a game of connect four
 class Checker
   attr_reader :color, :x, :y
 
-  def initialize(color, pos_x, pos_y)
+  def initialize(color, x_coord, y_coord)
     @color = color
-    @x = pos_x
-    @y = pos_y
+    @x = x_coord
+    @y = y_coord
+  end
+
+  def ==(other)
+    @color == other.color && @x == other.x && @y == other.y
   end
 end

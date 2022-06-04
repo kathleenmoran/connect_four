@@ -12,8 +12,17 @@ class Board
     horizontal_win?(last_checker) || vertical_win?(last_checker) || diagonal_win?(last_checker)
   end
 
-  def place_checker(checker)
-
+  def place_checker(y_coord, color)
+    checker = nil
+    @values.transpose[y_coord].each_with_index do |value, x_coord|
+      unless value.nil?
+        checker = Checker.new(color, x_coord - 1, y_coord)
+        @values[x_coord - 1][y_coord] = checker
+        break
+      end
+      @values[x_coord][y_coord] = Checker.new(color, x_coord, y_coord) if x_coord == Constants::HEIGHT - 1
+    end
+    checker
   end
 
   private
