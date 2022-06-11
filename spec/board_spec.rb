@@ -500,6 +500,7 @@ describe Board do
 
   describe '#place_checker' do
     context 'when there are no checkers in the column' do
+      let(:checker04) { instance_double(Checker, color: :yellow, x: 0, y: 4) }
       let(:values) {
         [[nil, nil, nil, nil, nil, nil, nil], 
         [nil, nil, nil, nil, nil, nil, nil],
@@ -510,13 +511,63 @@ describe Board do
       }
       subject(:empty_board) { described_class.new(values) }
       let(:checker50) { instance_double(Checker, color: :red, x: 5, y: 0) }
-      before do
-        allow(checker50).to receive(:color).and_return(:red)
-        allow(checker50).to receive(:x).and_return(5)
-        allow(checker50).to receive(:y).and_return(0)
-      end
       it 'updates the board by adding a checker in the last row of the column' do
-        expect { empty_board.place_checker(0, :red) }.to change { empty_board.instance_variable_get(:@values)[5][0] }.from(nil).to(checker50)
+        expect { empty_board.place_checker(0, :red) }.to change { empty_board.instance_variable_get(:@values)[5][0] }.from(nil).to eq(checker50)
+      end
+    end
+
+    context 'when there is 1 checker in the column' do
+      let(:checker51) { instance_double(Checker, color: :yellow, x: 5, y: 1) }
+      let(:values) {
+        [[nil, nil, nil, nil, nil, nil, nil], 
+        [nil, nil, nil, nil, nil, nil, nil],
+        [nil, nil, nil, nil, nil, nil, nil],
+        [nil, nil, nil, nil, nil, nil, nil],
+        [nil, nil, nil, nil, nil, nil, nil],
+        [nil, checker51, nil, nil, nil, nil, nil]]
+      }
+      subject(:board_with_one_checker) { described_class.new(values) }
+      let(:checker41) { instance_double(Checker, color: :yellow, x: 4, y: 1) }
+      it 'updates the board by adding a checker in the last row of the column' do
+        expect { board_with_one_checker.place_checker(1, :yellow) }.to change { board_with_one_checker.instance_variable_get(:@values)[4][1] }.from(nil).to eq(checker41)
+      end
+    end
+
+    context 'when there are two checkers in the column' do
+      let(:checker51) { instance_double(Checker, color: :yellow, x: 5, y: 1) }
+      let(:values) {
+        [[nil, nil, nil, nil, nil, nil, nil], 
+        [nil, nil, nil, nil, nil, nil, nil],
+        [nil, nil, nil, nil, nil, nil, nil],
+        [nil, nil, nil, nil, nil, nil, nil],
+        [nil, nil, nil, nil, nil, nil, nil],
+        [nil, checker51, nil, nil, nil, nil, nil]]
+      }
+      subject(:board_with_one_checker) { described_class.new(values) }
+      let(:checker41) { instance_double(Checker, color: :yellow, x: 4, y: 1) }
+      it 'updates the board by adding a checker in the last row of the column' do
+        expect { board_with_one_checker.place_checker(1, :yellow) }.to change { board_with_one_checker.instance_variable_get(:@values)[4][1] }.from(nil).to eq(checker41)
+      end
+    end
+
+    context 'when there are five checkers in the column' do
+      let(:checker16) { instance_double(Checker, color: :yellow, x: 1, y: 6) }
+      let(:checker26) { instance_double(Checker, color: :yellow, x: 2, y: 6) }
+      let(:checker36) { instance_double(Checker, color: :yellow, x: 3, y: 6) }
+      let(:checker46) { instance_double(Checker, color: :yellow, x: 4, y: 6) }
+      let(:checker56) { instance_double(Checker, color: :yellow, x: 5, y: 6) }
+      let(:values) {
+        [[nil, nil, nil, nil, nil, nil, nil], 
+        [nil, nil, nil, nil, nil, nil, checker16],
+        [nil, nil, nil, nil, nil, nil, checker26],
+        [nil, nil, nil, nil, nil, nil, checker36],
+        [nil, nil, nil, nil, nil, nil, checker46],
+        [nil, nil, nil, nil, nil, nil, checker56]]
+      }
+      subject(:board_with_one_checker) { described_class.new(values) }
+      let(:checker06) { instance_double(Checker, color: :yellow, x: 0, y: 6) }
+      it 'updates the board by adding a checker in the last row of the column' do
+        expect { board_with_one_checker.place_checker(6, :yellow) }.to change { board_with_one_checker.instance_variable_get(:@values)[0][6] }.from(nil).to eq(checker06)
       end
     end
   end

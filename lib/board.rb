@@ -4,8 +4,9 @@ require_relative 'constants'
 
 # the board of a game of connect four
 class Board
-  def initialize(values = Array.new(Constants::HEIGHT) { Array.new(Constants::WIDTH) })
+  def initialize(values = Array.new(Constants::HEIGHT) { Array.new(Constants::WIDTH) }, token = Checker)
     @values = values
+    @token = token
   end
 
   def win?(last_checker)
