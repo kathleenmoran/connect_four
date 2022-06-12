@@ -4,9 +4,8 @@ require_relative 'constants'
 
 # the board of a game of connect four
 class Board
-  def initialize(values = Array.new(Constants::HEIGHT) { Array.new(Constants::WIDTH) }, token = Checker)
+  def initialize(values = Array.new(Constants::HEIGHT) { Array.new(Constants::WIDTH) })
     @values = values
-    @token = token
   end
 
   def win?(last_checker)
@@ -24,6 +23,10 @@ class Board
       @values[x_coord][y_coord] = Checker.new(color, x_coord, y_coord) if x_coord == Constants::HEIGHT - 1
     end
     checker
+  end
+
+  def valid_move?(column)
+    y_in_bounds?(column) && @values.transpose[column].include?(nil)
   end
 
   private
@@ -64,7 +67,15 @@ class Board
   end
 
   def in_bounds?(x_coord, y_coord)
-    x_coord.between?(0, Constants::HEIGHT - 1) && y_coord.between?(0, Constants::WIDTH - 1)
+    x_in_bounds?(x_coord) && y_in_bounds?(y_coord)
+  end
+
+  def x_in_bounds?(x_coord)
+    x_coord.between?(0, Constants::HEIGHT - 1)
+  end
+
+  def y_in_bounds?(y_coord)
+    y_coord.between?(0, Constants::WIDTH - 1)
   end
 
   def winning_array?(array, last_checker)

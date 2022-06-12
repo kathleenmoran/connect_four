@@ -10,7 +10,7 @@ describe Board do
       let(:checker32) { instance_double(Checker, color: :red, x: 3, y: 2) }
       let(:checker33) { instance_double(Checker, color: :red, x: 3, y: 3) }
       let(:checker34) { instance_double(Checker, color: :red, x: 3, y: 4) }
-      let(:values) { 
+      let(:values) {
         [[nil, nil, nil, nil, nil, nil, nil], 
         [nil, nil, nil, nil, nil, nil, nil],
         [nil, nil, nil, nil, nil, nil, nil],
@@ -31,7 +31,7 @@ describe Board do
       let(:checker05) { instance_double(Checker, color: :yellow, x: 0, y: 5) }
       let(:checker06) { instance_double(Checker, color: :yellow, x: 0, y: 6) }
       let(:values) {
-        [[nil, nil, nil, checker03, checker04, checker05, checker06], 
+        [[nil, nil, nil, checker03, checker04, checker05, checker06],
         [nil, nil, nil, nil, nil, nil, nil],
         [nil, nil, nil, nil, nil, nil, nil],
         [nil, nil, nil, nil, nil, nil, nil],
@@ -50,7 +50,7 @@ describe Board do
       let(:checker11) { instance_double(Checker, color: :red, x: 1, y: 1) }
       let(:checker12) { instance_double(Checker, color: :red, x: 1, y: 2) }
       let(:values) {
-        [[nil, nil, nil, nil, nil, nil, nil], 
+        [[nil, nil, nil, nil, nil, nil, nil],
         [checker10, checker11, checker12, nil, nil, nil, nil],
         [nil, nil, nil, nil, nil, nil, nil],
         [nil, nil, nil, nil, nil, nil, nil],
@@ -512,7 +512,8 @@ describe Board do
       subject(:empty_board) { described_class.new(values) }
       let(:checker50) { instance_double(Checker, color: :red, x: 5, y: 0) }
       it 'updates the board by adding a checker in the last row of the column' do
-        expect { empty_board.place_checker(0, :red) }.to change { empty_board.instance_variable_get(:@values)[5][0] }.from(nil).to eq(checker50)
+        expect { empty_board.place_checker(0, :red) }.to change { empty_board.instance_variable_get(:@values)[5][0] }
+          .from(nil).to eq(checker50)
       end
     end
 
@@ -529,7 +530,8 @@ describe Board do
       subject(:board_with_one_checker) { described_class.new(values) }
       let(:checker41) { instance_double(Checker, color: :yellow, x: 4, y: 1) }
       it 'updates the board by adding a checker in the last row of the column' do
-        expect { board_with_one_checker.place_checker(1, :yellow) }.to change { board_with_one_checker.instance_variable_get(:@values)[4][1] }.from(nil).to eq(checker41)
+        expect { board_with_one_checker.place_checker(1, :yellow) }
+          .to change { board_with_one_checker.instance_variable_get(:@values)[4][1] }.from(nil).to eq(checker41)
       end
     end
 
@@ -546,7 +548,8 @@ describe Board do
       subject(:board_with_one_checker) { described_class.new(values) }
       let(:checker41) { instance_double(Checker, color: :yellow, x: 4, y: 1) }
       it 'updates the board by adding a checker in the last row of the column' do
-        expect { board_with_one_checker.place_checker(1, :yellow) }.to change { board_with_one_checker.instance_variable_get(:@values)[4][1] }.from(nil).to eq(checker41)
+        expect { board_with_one_checker.place_checker(1, :yellow) }
+          .to change { board_with_one_checker.instance_variable_get(:@values)[4][1] }.from(nil).to eq(checker41)
       end
     end
 
@@ -567,7 +570,61 @@ describe Board do
       subject(:board_with_one_checker) { described_class.new(values) }
       let(:checker06) { instance_double(Checker, color: :yellow, x: 0, y: 6) }
       it 'updates the board by adding a checker in the last row of the column' do
-        expect { board_with_one_checker.place_checker(6, :yellow) }.to change { board_with_one_checker.instance_variable_get(:@values)[0][6] }.from(nil).to eq(checker06)
+        expect { board_with_one_checker.place_checker(6, :yellow) }
+          .to change { board_with_one_checker.instance_variable_get(:@values)[0][6] }.from(nil).to eq(checker06)
+      end
+    end
+  end
+
+  describe '#valid_move?' do
+    let(:checker06) { instance_double(Checker, color: :yellow, x: 0, y: 6) }
+    let(:checker16) { instance_double(Checker, color: :yellow, x: 1, y: 6) }
+    let(:checker26) { instance_double(Checker, color: :yellow, x: 2, y: 6) }
+    let(:checker36) { instance_double(Checker, color: :yellow, x: 3, y: 6) }
+    let(:checker46) { instance_double(Checker, color: :yellow, x: 4, y: 6) }
+    let(:checker56) { instance_double(Checker, color: :yellow, x: 5, y: 6) }
+    let(:checker10) { instance_double(Checker, color: :yellow, x: 1, y: 0) }
+    let(:checker20) { instance_double(Checker, color: :yellow, x: 2, y: 0) }
+    let(:checker30) { instance_double(Checker, color: :yellow, x: 3, y: 0) }
+    let(:checker40) { instance_double(Checker, color: :yellow, x: 4, y: 0) }
+    let(:checker50) { instance_double(Checker, color: :yellow, x: 5, y: 0) }
+    let(:values) {
+      [[nil, nil, nil, nil, nil, nil, checker06],
+      [checker10, nil, nil, nil, nil, nil, checker16],
+      [checker20, nil, nil, nil, nil, nil, checker26],
+      [checker30, nil, nil, nil, nil, nil, checker36],
+      [checker40, nil, nil, nil, nil, nil, checker46],
+      [checker50, nil, nil, nil, nil, nil, checker56]]
+    }
+    subject(:board) { described_class.new(values) }
+
+    context 'when the move entered is less than 0' do
+      it 'is not a valid move' do
+        expect(board).not_to be_valid_move(-1)
+      end
+    end
+
+    context 'when the move entered is greater than 6' do
+      it 'is not a valid move' do
+        expect(board).not_to be_valid_move(7)
+      end
+    end
+
+    context 'when the move entered is for a filled up column' do
+      it 'is not a valid move' do
+        expect(board).not_to be_valid_move(6)
+      end
+    end
+
+    context 'when the move entered is for an empty column' do
+      it 'is a valid move' do
+        expect(board).to be_valid_move(3)
+      end
+    end
+
+    context 'when the move entered is for a partially filled column' do
+      it 'is a valid move' do
+        expect(board).to be_valid_move(0)
       end
     end
   end
