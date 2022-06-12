@@ -628,4 +628,109 @@ describe Board do
       end
     end
   end
+
+  describe '#to_s' do
+    context 'when the board is empty' do
+      let(:values) {
+        [[nil, nil, nil, nil, nil, nil, nil], 
+        [nil, nil, nil, nil, nil, nil, nil],
+        [nil, nil, nil, nil, nil, nil, nil],
+        [nil, nil, nil, nil, nil, nil, nil],
+        [nil, nil, nil, nil, nil, nil, nil],
+        [nil, nil, nil, nil, nil, nil, nil]]
+      }
+      subject(:empty_board) { described_class.new(values) }
+      it 'will return a board with no checkers' do
+        empty_board_string = "\n 0    1    2   3    4    5   6\n"\
+                             " ⚫ | ⚫ | ⚫ | ⚫ | ⚫ | ⚫ | ⚫ \n"\
+                             "--------------------------------\n"\
+                             " ⚫ | ⚫ | ⚫ | ⚫ | ⚫ | ⚫ | ⚫ \n"\
+                             "--------------------------------\n"\
+                             " ⚫ | ⚫ | ⚫ | ⚫ | ⚫ | ⚫ | ⚫ \n"\
+                             "--------------------------------\n"\
+                             " ⚫ | ⚫ | ⚫ | ⚫ | ⚫ | ⚫ | ⚫ \n"\
+                             "--------------------------------\n"\
+                             " ⚫ | ⚫ | ⚫ | ⚫ | ⚫ | ⚫ | ⚫ \n"\
+                             "--------------------------------\n"\
+                             " ⚫ | ⚫ | ⚫ | ⚫ | ⚫ | ⚫ | ⚫ \n"
+        expect(empty_board.to_s).to eq(empty_board_string)
+      end
+    end
+
+    context 'when the board is not empty' do
+      let(:checker00) { instance_double(Checker, color: :red, x: 0, y: 0) }
+      let(:checker10) { instance_double(Checker, color: :red, x: 1, y: 0) }
+      let(:checker20) { instance_double(Checker, color: :yellow, x: 2, y: 0) }
+      let(:checker30) { instance_double(Checker, color: :red, x: 3, y: 0) }
+      let(:checker40) { instance_double(Checker, color: :red, x: 4, y: 0) }
+      let(:checker50) { instance_double(Checker, color: :yellow, x: 5, y: 0) }
+
+      let(:checker51) { instance_double(Checker, color: :red, x: 5, y: 1) }
+
+      let(:checker42) { instance_double(Checker, color: :red, x: 4, y: 2) }
+      let(:checker52) { instance_double(Checker, color: :red, x: 5, y: 2) }
+
+      let(:checker43) { instance_double(Checker, color: :red, x: 4, y: 3) }
+      let(:checker53) { instance_double(Checker, color: :yellow, x: 5, y: 3) }
+
+      let(:checker24) { instance_double(Checker, color: :red, x: 2, y: 4) }
+      let(:checker34) { instance_double(Checker, color: :yellow, x: 3, y: 4) }
+      let(:checker44) { instance_double(Checker, color: :red, x: 4, y: 4) }
+      let(:checker54) { instance_double(Checker, color: :yellow, x: 5, y: 4) }
+
+      let(:checker35) { instance_double(Checker, color: :red, x: 3, y: 5) }
+      let(:checker45) { instance_double(Checker, color: :yellow, x: 4, y: 5) }
+      let(:checker55) { instance_double(Checker, color: :yellow, x: 5, y: 5) }
+
+      let(:checker46) { instance_double(Checker, color: :yellow, x: 4, y: 6) }
+      let(:checker56) { instance_double(Checker, color: :yellow, x: 5, y: 6) }
+
+      let(:values) {
+        [[checker00, nil, nil, nil, nil, nil, nil],
+        [checker10, nil, nil, nil, nil, nil, nil],
+        [checker20, nil, nil, nil, checker24, nil, nil],
+        [checker30, nil, nil, nil, checker34, checker35, nil],
+        [checker40, nil, checker42, checker43, checker44, checker45, checker46],
+        [checker50, checker51, checker52, checker53, checker54, checker55, checker56]]
+      }
+      subject(:full_board) { described_class.new(values) }
+      before do
+        allow(checker00).to receive(:to_str).and_return(' 🔴 ')
+        allow(checker10).to receive(:to_str).and_return(' 🔴 ')
+        allow(checker20).to receive(:to_str).and_return(' 🟡 ')
+        allow(checker30).to receive(:to_str).and_return(' 🔴 ')
+        allow(checker40).to receive(:to_str).and_return(' 🔴 ')
+        allow(checker50).to receive(:to_str).and_return(' 🟡 ')
+        allow(checker51).to receive(:to_str).and_return(' 🔴 ')
+        allow(checker42).to receive(:to_str).and_return(' 🟡 ')
+        allow(checker52).to receive(:to_str).and_return(' 🔴 ')
+        allow(checker43).to receive(:to_str).and_return(' 🔴 ')
+        allow(checker53).to receive(:to_str).and_return(' 🟡 ')
+        allow(checker24).to receive(:to_str).and_return(' 🟡 ')
+        allow(checker34).to receive(:to_str).and_return(' 🔴 ')
+        allow(checker44).to receive(:to_str).and_return(' 🔴 ')
+        allow(checker54).to receive(:to_str).and_return(' 🔴 ')
+        allow(checker35).to receive(:to_str).and_return(' 🔴 ')
+        allow(checker45).to receive(:to_str).and_return(' 🟡 ')
+        allow(checker55).to receive(:to_str).and_return(' 🟡 ')
+        allow(checker46).to receive(:to_str).and_return(' 🟡 ')
+        allow(checker56).to receive(:to_str).and_return(' 🟡 ')
+      end
+      it 'will return a board with no checkers' do
+        full_board_string = "\n 0    1    2   3    4    5   6\n"\
+                             " 🔴 | ⚫ | ⚫ | ⚫ | ⚫ | ⚫ | ⚫ \n"\
+                             "--------------------------------\n"\
+                             " 🔴 | ⚫ | ⚫ | ⚫ | ⚫ | ⚫ | ⚫ \n"\
+                             "--------------------------------\n"\
+                             " 🟡 | ⚫ | ⚫ | ⚫ | 🟡 | ⚫ | ⚫ \n"\
+                             "--------------------------------\n"\
+                             " 🔴 | ⚫ | ⚫ | ⚫ | 🔴 | 🔴 | ⚫ \n"\
+                             "--------------------------------\n"\
+                             " 🔴 | ⚫ | 🟡 | 🔴 | 🔴 | 🟡 | 🟡 \n"\
+                             "--------------------------------\n"\
+                             " 🟡 | 🔴 | 🔴 | 🟡 | 🔴 | 🟡 | 🟡 \n"
+        expect(full_board.to_s).to eq(full_board_string)
+      end
+    end
+  end
 end

@@ -15,4 +15,9 @@ class Checker
   def ==(other)
     @color == other.color && @x == other.x && @y == other.y
   end
+
+  def to_str
+    return ' 🔴 ' if @color == :red
+    return ' 🟡 ' if @color == :yellow
+  end
 end

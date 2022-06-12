@@ -29,6 +29,15 @@ class Board
     y_in_bounds?(column) && @values.transpose[column].include?(nil)
   end
 
+  def to_s
+    board_as_string = Constants::HEADER
+    @values.each_with_index do |row, index|
+      board_as_string += row_to_s(row)
+      board_as_string += Constants::HORIZONTAL_ROW_BORDER if index < Constants::HEIGHT - 1
+    end
+    board_as_string
+  end
+
   private
 
   def horizontal_win?(last_checker)
@@ -89,5 +98,14 @@ class Board
       return true if in_a_row == Constants::WINNING_CONDITION
     end
     false
+  end
+
+  def row_to_s(row)
+    row_as_string = ''
+    row.each_with_index do |square, index|
+      row_as_string += square.nil? ? ' ⚫ ' : square
+      row_as_string += (index < Constants::WIDTH - 1 ? '|' : "\n")
+    end
+    row_as_string
   end
 end
