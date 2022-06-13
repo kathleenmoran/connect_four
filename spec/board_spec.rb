@@ -513,7 +513,7 @@ describe Board do
       let(:checker50) { instance_double(Checker, color: :red, x: 5, y: 0) }
       it 'updates the board by adding a checker in the last row of the column' do
         expect { empty_board.place_checker(0, :red) }.to change { empty_board.instance_variable_get(:@values)[5][0] }
-          .from(nil).to eq(checker50)
+          .from(nil).to eql(checker50)
       end
     end
 
@@ -531,7 +531,7 @@ describe Board do
       let(:checker41) { instance_double(Checker, color: :yellow, x: 4, y: 1) }
       it 'updates the board by adding a checker in the last row of the column' do
         expect { board_with_one_checker.place_checker(1, :yellow) }
-          .to change { board_with_one_checker.instance_variable_get(:@values)[4][1] }.from(nil).to eq(checker41)
+          .to change { board_with_one_checker.instance_variable_get(:@values)[4][1] }.from(nil).to eql(checker41)
       end
     end
 
@@ -549,7 +549,7 @@ describe Board do
       let(:checker41) { instance_double(Checker, color: :yellow, x: 4, y: 1) }
       it 'updates the board by adding a checker in the last row of the column' do
         expect { board_with_one_checker.place_checker(1, :yellow) }
-          .to change { board_with_one_checker.instance_variable_get(:@values)[4][1] }.from(nil).to eq(checker41)
+          .to change { board_with_one_checker.instance_variable_get(:@values)[4][1] }.from(nil).to eql(checker41)
       end
     end
 
@@ -571,7 +571,7 @@ describe Board do
       let(:checker06) { instance_double(Checker, color: :yellow, x: 0, y: 6) }
       it 'updates the board by adding a checker in the last row of the column' do
         expect { board_with_one_checker.place_checker(6, :yellow) }
-          .to change { board_with_one_checker.instance_variable_get(:@values)[0][6] }.from(nil).to eq(checker06)
+          .to change { board_with_one_checker.instance_variable_get(:@values)[0][6] }.from(nil).to eql(checker06)
       end
     end
   end
@@ -641,17 +641,17 @@ describe Board do
       }
       subject(:empty_board) { described_class.new(values) }
       it 'will return a board with no checkers' do
-        empty_board_string = "\n 0    1    2   3    4    5   6\n"\
+        empty_board_string = "\n  0    1    2    3    4    5    6\n"\
                              " ⚫ | ⚫ | ⚫ | ⚫ | ⚫ | ⚫ | ⚫ \n"\
-                             "--------------------------------\n"\
+                             "----------------------------------\n"\
                              " ⚫ | ⚫ | ⚫ | ⚫ | ⚫ | ⚫ | ⚫ \n"\
-                             "--------------------------------\n"\
+                             "----------------------------------\n"\
                              " ⚫ | ⚫ | ⚫ | ⚫ | ⚫ | ⚫ | ⚫ \n"\
-                             "--------------------------------\n"\
+                             "----------------------------------\n"\
                              " ⚫ | ⚫ | ⚫ | ⚫ | ⚫ | ⚫ | ⚫ \n"\
-                             "--------------------------------\n"\
+                             "----------------------------------\n"\
                              " ⚫ | ⚫ | ⚫ | ⚫ | ⚫ | ⚫ | ⚫ \n"\
-                             "--------------------------------\n"\
+                             "----------------------------------\n"\
                              " ⚫ | ⚫ | ⚫ | ⚫ | ⚫ | ⚫ | ⚫ \n"
         expect(empty_board.to_s).to eq(empty_board_string)
       end
@@ -717,17 +717,17 @@ describe Board do
         allow(checker56).to receive(:to_str).and_return(' 🟡 ')
       end
       it 'will return a board with no checkers' do
-        full_board_string = "\n 0    1    2   3    4    5   6\n"\
+        full_board_string = "\n  0    1    2    3    4    5    6\n"\
                              " 🔴 | ⚫ | ⚫ | ⚫ | ⚫ | ⚫ | ⚫ \n"\
-                             "--------------------------------\n"\
+                             "----------------------------------\n"\
                              " 🔴 | ⚫ | ⚫ | ⚫ | ⚫ | ⚫ | ⚫ \n"\
-                             "--------------------------------\n"\
+                             "----------------------------------\n"\
                              " 🟡 | ⚫ | ⚫ | ⚫ | 🟡 | ⚫ | ⚫ \n"\
-                             "--------------------------------\n"\
+                             "----------------------------------\n"\
                              " 🔴 | ⚫ | ⚫ | ⚫ | 🔴 | 🔴 | ⚫ \n"\
-                             "--------------------------------\n"\
+                             "----------------------------------\n"\
                              " 🔴 | ⚫ | 🟡 | 🔴 | 🔴 | 🟡 | 🟡 \n"\
-                             "--------------------------------\n"\
+                             "----------------------------------\n"\
                              " 🟡 | 🔴 | 🔴 | 🟡 | 🔴 | 🟡 | 🟡 \n"
         expect(full_board.to_s).to eq(full_board_string)
       end

@@ -6,6 +6,8 @@ require_relative 'displayable'
 # a player of a game
 class Player
   include Displayable
+  attr_reader :color
+
   def initialize(color, number)
     @color = color
     @number = number
@@ -18,6 +20,10 @@ class Player
     else
       make_move
     end
+  end
+
+  def win_game
+    win_game_message(@number)
   end
 
   private

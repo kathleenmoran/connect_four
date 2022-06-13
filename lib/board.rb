@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative 'constants'
+require_relative 'checker'
 
 # the board of a game of connect four
 class Board
@@ -9,7 +10,7 @@ class Board
   end
 
   def win?(last_checker)
-    horizontal_win?(last_checker) || vertical_win?(last_checker) || diagonal_win?(last_checker)
+    !last_checker.nil? && (horizontal_win?(last_checker) || vertical_win?(last_checker) || diagonal_win?(last_checker))
   end
 
   def place_checker(y_coord, color)

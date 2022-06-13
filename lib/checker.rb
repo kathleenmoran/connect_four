@@ -13,6 +13,10 @@ class Checker
   end
 
   def ==(other)
+    other.class == self.class && @color == other.color && @x == other.x && @y == other.y
+  end
+
+  def eql?(other)
     @color == other.color && @x == other.x && @y == other.y
   end
 
