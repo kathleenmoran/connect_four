@@ -57,7 +57,7 @@ class Board
   def left_diagonal(x_coord, y_coord)
     min_coord = [x_coord, y_coord].min
     diagonal = []
-    (Constants::HEIGHT - 1).times do |i|
+    Constants::HEIGHT.times do |i|
       new_x = x_coord - min_coord + i
       new_y = y_coord - min_coord + i
       break unless in_bounds?(new_x, new_y)
@@ -69,7 +69,7 @@ class Board
 
   def right_diagonal(x_coord, y_coord)
     diagonal = []
-    (Constants::HEIGHT - 1).times do |new_x|
+    Constants::HEIGHT.times do |new_x|
       new_y = x_coord + y_coord - new_x
       diagonal << @values[new_x][new_y] if in_bounds?(x_coord, y_coord)
     end
