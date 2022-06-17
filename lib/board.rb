@@ -21,7 +21,10 @@ class Board
         @values[x_coord - 1][y_coord] = checker
         break
       end
-      @values[x_coord][y_coord] = Checker.new(color, x_coord, y_coord) if x_coord == Constants::HEIGHT - 1
+      if x_coord == Constants::HEIGHT - 1
+        checker = Checker.new(color, x_coord, y_coord)
+        @values[x_coord][y_coord] = checker
+      end
     end
     checker
   end
